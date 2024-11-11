@@ -2,20 +2,47 @@
 //  ContentView.swift
 //  Skinalyze
 //
-//  Created by Alejandro Ollivier Ochoa on 07/11/24.
+//  Created by Frida Pérez Perfecto on 11/11/24.
 //
 
 import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Skinalyze")
+        TabView {
+            HomepageView()
+                .tabItem {
+                    Image(systemName: "house.fill")
+                }
+            
+            ProfileView()
+                .tabItem {
+                    Image(systemName: "person.crop.circle")
+                }
+            
+            SettingsView()
+                .tabItem {
+                    Image(systemName: "gearshape.fill")
+                }
         }
-        .padding()
+    }
+}
+
+struct ProfileView: View {
+    var body: some View {
+        Text("Vista de Perfil")
+            .font(.largeTitle)
+            .fontWeight(.bold)
+            .padding()
+    }
+}
+
+struct SettingsView: View {
+    var body: some View {
+        Text("Vista de Ajustes")
+            .font(.largeTitle)
+            .fontWeight(.bold)
+            .padding()
     }
 }
 
