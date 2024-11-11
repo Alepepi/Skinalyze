@@ -47,7 +47,7 @@ struct HomepageView: View {
                         }
                     }
                 }
-                .padding(.bottom, 20)
+                .padding(.bottom, 15)
                 
                 HStack {
                     Button(action: {
@@ -72,11 +72,9 @@ struct HomepageView: View {
                         }
                     }
                     
-                    Spacer().frame(width: 20) // Separador
+                    Spacer().frame(width: 25)
                     
-                    // Botón de consulta IA
                     Button(action: {
-                        // Acción para abrir el chat con IA
                     }) {
                         VStack {
                             Text("AI Chat")
@@ -108,7 +106,6 @@ struct HomepageView: View {
     }
 }
 
-// Picker para manejar cámara o galería
 struct ImagePicker: UIViewControllerRepresentable {
     var sourceType: UIImagePickerController.SourceType
     @Binding var selectedImage: UIImage?
@@ -146,7 +143,7 @@ struct ImagePicker: UIViewControllerRepresentable {
         let imagePicker = UIImagePickerController()
         imagePicker.sourceType = sourceType
         imagePicker.delegate = context.coordinator
-        imagePicker.allowsEditing = false // No se permite la edición de la imagen
+        imagePicker.allowsEditing = false
         return imagePicker
     }
     

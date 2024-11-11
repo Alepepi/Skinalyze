@@ -15,31 +15,31 @@ struct ContentView: View {
                     Image(systemName: "house.fill")
                 }
             
-            ProfileView()
+            RecordsView()
                 .tabItem {
-                    Image(systemName: "person.crop.circle")
+                    Image(systemName: "book")
                 }
             
-            SettingsView()
+            ProfileView()
                 .tabItem {
-                    Image(systemName: "gearshape.fill")
+                    Image(systemName: "person.fill")
                 }
         }
     }
 }
 
-struct ProfileView: View {
+struct RecordsView: View {
     var body: some View {
-        Text("Vista de Perfil")
+        Text("Records")
             .font(.largeTitle)
             .fontWeight(.bold)
             .padding()
     }
 }
 
-struct SettingsView: View {
+struct ProfileView: View {
     var body: some View {
-        Text("Vista de Ajustes")
+        Text("Profile")
             .font(.largeTitle)
             .fontWeight(.bold)
             .padding()
