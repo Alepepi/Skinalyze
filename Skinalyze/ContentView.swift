@@ -7,13 +7,31 @@
 
 import SwiftUI
 
+extension Color {
+    init(hex: String) {
+        let hexString = hex.hasPrefix("#") ? String(hex.dropFirst()) : hex
+        
+        let scanner = Scanner(string: hexString)
+        var rgb: UInt64 = 0
+        scanner.scanHexInt64(&rgb)
+        
+        let red = Double((rgb & 0xFF0000) >> 16) / 255.0
+        let green = Double((rgb & 0x00FF00) >> 8) / 255.0
+        let blue = Double(rgb & 0x0000FF) / 255.0
+        
+        self.init(red: red, green: green, blue: blue)
+    }
+}
+
 struct ContentView: View {
     init() {
-        let appearance = UITabBarAppearance()
-        appearance.backgroundColor = .white
-        UITabBar.appearance().scrollEdgeAppearance = appearance
+            let appearance = UITabBarAppearance()
+            UITabBar.appearance().scrollEdgeAppearance = appearance
+        
+            appearance.stackedLayoutAppearance.selected.iconColor = UIColor(Color(hex: "#0D5C8B"))
+            appearance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor(Color(hex: "#0D5C8B"))]
     }
-    
+        
     var body: some View {
         NavigationView {
             TabView {

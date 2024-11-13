@@ -14,14 +14,13 @@ struct SkinIssue: Identifiable {
     var description: String
     var symptoms: String
     var causes: String
-    var imageName: String
 }
 
 // Sample data for Skin Issues
 let sampleSkinIssues = [
-    SkinIssue(name: "Eczema", description: "A condition that causes inflamed, itchy skin.", symptoms: "Redness, itching, dry skin", causes: "Allergies, stress, irritants", imageName: "eczema"),
-    SkinIssue(name: "Psoriasis", description: "A disease that causes red, scaly patches on the skin.", symptoms: "Red patches, scaling, itching", causes: "Genetics, immune system", imageName: "psoriasis"),
-    SkinIssue(name: "Acne", description: "A skin condition that causes pimples and blemishes.", symptoms: "Pimples, blackheads, whiteheads", causes: "Hormones, bacteria, clogged pores", imageName: "acne")
+    SkinIssue(name: "Eczema", description: "A condition that causes inflamed, itchy skin.", symptoms: "Redness, itching, dry skin", causes: "Allergies, stress, irritants"),
+    SkinIssue(name: "Psoriasis", description: "A disease that causes red, scaly patches on the skin.", symptoms: "Red patches, scaling, itching", causes: "Genetics, immune system"),
+    SkinIssue(name: "Acne", description: "A skin condition that causes pimples and blemishes.", symptoms: "Pimples, blackheads, whiteheads", causes: "Hormones, bacteria, clogged pores")
 ]
 
 // Main View
@@ -46,19 +45,13 @@ struct SkinIssuesView: View {
     }
 }
 
-// Row View for each Skin Issue
+// Row View for each Skin Issue (Text aligned to the left)
 struct SkinIssueRow: View {
     var issue: SkinIssue
     
     var body: some View {
-        HStack(alignment: .top) {
-            Image(issue.imageName)
-                .resizable()
-                .frame(width: 60, height: 60)
-                .clipShape(RoundedRectangle(cornerRadius: 8))
-                .padding(.trailing, 10)
-            
-            VStack(alignment: .leading, spacing: 4) {
+        HStack {
+            VStack(alignment: .leading, spacing: 6) {
                 Text(issue.name)
                     .font(.headline)
                     .foregroundColor(.primary)
@@ -66,10 +59,10 @@ struct SkinIssueRow: View {
                 Text(issue.description)
                     .font(.subheadline)
                     .foregroundColor(.secondary)
-                    .lineLimit(2)
+                    .lineLimit(2) // Ensures that the description doesn't extend too far
             }
+            .padding(.vertical, 8)
         }
-        .padding(.vertical, 8)
     }
 }
 
@@ -80,12 +73,6 @@ struct SkinIssueDetailView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                Image(issue.imageName)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .cornerRadius(8)
-                    .padding(.bottom, 20)
-                
                 Text(issue.name)
                     .font(.largeTitle)
                     .fontWeight(.bold)
