@@ -123,7 +123,7 @@ struct HomepageView: View {
                         ZStack {
                             
                             RoundedRectangle(cornerRadius: 15)
-                                .stroke(Color(hex: "#0D5C8B"), lineWidth: 3)
+                                .stroke(Color(hex: "#E3001E"), lineWidth: 3)
                                 .fill(Color(hex: "#FF8985"))
                                 .frame(width: 300, height: 130)
                                 //.shadow(radius: 10)
