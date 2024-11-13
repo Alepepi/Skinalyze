@@ -8,22 +8,32 @@
 import SwiftUI
 
 struct ContentView: View {
+    init() {
+        let appearance = UITabBarAppearance()
+        appearance.backgroundColor = .white
+        UITabBar.appearance().scrollEdgeAppearance = appearance
+    }
+    
     var body: some View {
-        TabView {
-            HomepageView()
-                .tabItem {
-                    Image(systemName: "house.fill")
-                }
-            
-            RecordsView()
-                .tabItem {
-                    Image(systemName: "book")
-                }
-            
-            ProfileView()
-                .tabItem {
-                    Image(systemName: "person.fill")
-                }
+        NavigationView {
+            TabView {
+                HomepageView()
+                    .tabItem {
+                        Image(systemName: "house.fill")
+                        Text("Home")
+                    }
+                
+                RecordsView()
+                    .tabItem {
+                        Image(systemName: "book")
+                        Text("Records")
+                    }
+                ProfileView()
+                    .tabItem {
+                        Image(systemName: "person.fill")
+                        Text("Profile")
+                    }
+            }
         }
     }
 }
@@ -36,7 +46,7 @@ struct RecordsView: View {
             .padding()
     }
 }
-
+    
 struct ProfileView: View {
     var body: some View {
         Text("Profile")
