@@ -54,13 +54,10 @@ struct HomepageView: View {
                         }
                     }
                 }
-                .padding(.bottom, 2)
+                .padding(.bottom, 3)
                 
                 HStack {
-                    Button(action: {
-                        sourceType = .photoLibrary
-                        isImagePickerPresented = true
-                    }) {
+                    NavigationLink(destination: SkinIssuesListView()) {
                         VStack(alignment: .leading) {
                             Text("Catalogue")
                                 .font(.system(size: 20))
@@ -80,9 +77,7 @@ struct HomepageView: View {
                         }
                     }
                     Spacer().frame(width: 25)
-                    Button(action: {
-                        // Aquí puedes agregar otra funcionalidad si es necesario
-                    }) {
+                    NavigationLink(destination: MedicinesListView()) {
                         VStack(alignment: .leading) {
                             Text("Medicines")
                                 .font(.system(size: 20))
@@ -121,7 +116,7 @@ struct HomepageView: View {
                             RoundedRectangle(cornerRadius: 15)
                                 .stroke(Color(hex: "#E3001E"), lineWidth: 3)
                                 .fill(Color(hex: "#FF8985"))
-                                .frame(width: 300, height: 130)
+                                .frame(width: 300, height: 100)
                             Image(systemName: "pencil.and.scribble")
                                 .font(.system(size: 50))
                                 .foregroundColor(Color(hex: "#E3001E"))
