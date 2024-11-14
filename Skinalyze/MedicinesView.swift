@@ -16,19 +16,20 @@ struct MedicinesView: Identifiable {
     let sideEffects: String
     let dosage: String
     let classification: String
+    let imageName: String?
 }
 
 // Sample data for testing
 let sampleMedicines = [
-    MedicinesView(name: "Ibuprofen", description: "A common pain reliever and anti-inflammatory.", uses: ["Pain relief", "Fever reduction", "Inflammation reduction"], sideEffects: "Stomach pain, nausea, dizziness.", dosage: "200-400 mg every 4-6 hours.", classification: "OTC"),
-    MedicinesView(name: "Amoxicillin", description: "An antibiotic used to treat bacterial infections.", uses: ["Bacterial infections", "Sinusitis", "Pneumonia"], sideEffects: "Diarrhea, nausea, skin rash.", dosage: "500 mg every 8 hours.", classification: "Prescription"),
-    MedicinesView(name: "Metformin", description: "Medication for managing type 2 diabetes.", uses: ["Blood sugar control", "Type 2 diabetes management"], sideEffects: "Nausea, stomach upset, diarrhea.", dosage: "500-1000 mg daily.", classification: "Prescription"),
-    MedicinesView(name: "Methadone", description: "A synthetic opioid used to treat opioid addiction and severe pain.", uses: ["Opioid addiction", "Severe pain relief"], sideEffects: "Dizziness, nausea, constipation.", dosage: "10-80 mg daily.", classification: "Restricted"),
-    MedicinesView(name: "Cetirizine", description: "An antihistamine for allergy relief.", uses: ["Allergy relief", "Itching reduction", "Runny nose relief"], sideEffects: "Drowsiness, dry mouth, fatigue.", dosage: "10 mg once daily.", classification: "OTC"),
-    MedicinesView(name: "Clonazepam", description: "A medication used to treat seizure disorders and panic attacks.", uses: ["Seizures", "Panic attacks"], sideEffects: "Drowsiness, dizziness, memory problems.", dosage: "0.5-2 mg daily.", classification: "Controlled"),
-    MedicinesView(name: "Aspirin", description: "A medication used for pain relief, inflammation, and fever reduction.", uses: ["Pain relief", "Fever reduction", "Heart disease prevention"], sideEffects: "Stomach irritation, nausea, ulcers.", dosage: "81-325 mg daily.", classification: "OTC"),
-    MedicinesView(name: "Prednisone", description: "A corticosteroid used for inflammation and immune system modulation.", uses: ["Inflammation", "Allergic reactions", "Autoimmune diseases"], sideEffects: "Weight gain, mood changes, increased blood pressure.", dosage: "5-60 mg daily.", classification: "Prescription"),
-    MedicinesView(name: "Loratadine", description: "An antihistamine used to treat allergy symptoms.", uses: ["Allergy relief", "Itching reduction", "Runny nose relief"], sideEffects: "Headache, dry mouth, fatigue.", dosage: "10 mg once daily.", classification: "OTC"),
+    MedicinesView(name: "Ibuprofen", description: "A common pain reliever and anti-inflammatory.", uses: ["Pain relief", "Fever reduction", "Inflammation reduction"], sideEffects: "Stomach pain, nausea, dizziness.", dosage: "200-400 mg every 4-6 hours.", classification: "OTC", imageName: "ibuprofen1"),
+    MedicinesView(name: "Amoxicillin", description: "An antibiotic used to treat bacterial infections.", uses: ["Bacterial infections", "Sinusitis", "Pneumonia"], sideEffects: "Diarrhea, nausea, skin rash.", dosage: "500 mg every 8 hours.", classification: "Prescription", imageName: "ibuprofen1"),
+    MedicinesView(name: "Metformin", description: "Medication for managing type 2 diabetes.", uses: ["Blood sugar control", "Type 2 diabetes management"], sideEffects: "Nausea, stomach upset, diarrhea.", dosage: "500-1000 mg daily.", classification: "Prescription", imageName: "ibuprofen1"),
+    MedicinesView(name: "Methadone", description: "A synthetic opioid used to treat opioid addiction and severe pain.", uses: ["Opioid addiction", "Severe pain relief"], sideEffects: "Dizziness, nausea, constipation.", dosage: "10-80 mg daily.", classification: "Restricted", imageName: "ibuprofen1"),
+    MedicinesView(name: "Cetirizine", description: "An antihistamine for allergy relief.", uses: ["Allergy relief", "Itching reduction", "Runny nose relief"], sideEffects: "Drowsiness, dry mouth, fatigue.", dosage: "10 mg once daily.", classification: "OTC", imageName: "ibuprofen1"),
+    MedicinesView(name: "Clonazepam", description: "A medication used to treat seizure disorders and panic attacks.", uses: ["Seizures", "Panic attacks"], sideEffects: "Drowsiness, dizziness, memory problems.", dosage: "0.5-2 mg daily.", classification: "Controlled", imageName: "ibuprofen1"),
+    MedicinesView(name: "Aspirin", description: "A medication used for pain relief, inflammation, and fever reduction.", uses: ["Pain relief", "Fever reduction", "Heart disease prevention"], sideEffects: "Stomach irritation, nausea, ulcers.", dosage: "81-325 mg daily.", classification: "OTC", imageName: "ibuprofen1"),
+    MedicinesView(name: "Prednisone", description: "A corticosteroid used for inflammation and immune system modulation.", uses: ["Inflammation", "Allergic reactions", "Autoimmune diseases"], sideEffects: "Weight gain, mood changes, increased blood pressure.", dosage: "5-60 mg daily.", classification: "Prescription", imageName: "ibuprofen1"),
+    MedicinesView(name: "Loratadine", description: "An antihistamine used to treat allergy symptoms.", uses: ["Allergy relief", "Itching reduction", "Runny nose relief"], sideEffects: "Headache, dry mouth, fatigue.", dosage: "10 mg once daily.", classification: "OTC", imageName: "ibuprofen1")
 ]
 
 // MARK: - Row View for Each Medicine
@@ -89,19 +90,31 @@ struct MedicineDetailView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                // Title
-                Text(medicine.name)
-                    .font(.largeTitle)
-                    .bold()
-
-                // Classification icon and description
-                let (icon, color) = classificationIconAndColor(for: medicine.classification)
                 HStack {
-                    Image(systemName: icon)
-                        .foregroundColor(color)
-                    Text(medicine.classification)
-                        .font(.title3)
-                        .foregroundColor(color)
+                    Text(medicine.name)
+                        .font(.largeTitle)
+                        .bold()
+                    
+                    // Classification icon and description
+                    let (icon, color) = classificationIconAndColor(for: medicine.classification)
+                    HStack {
+                        Image(systemName: icon)
+                            .foregroundColor(color)
+                        Text(medicine.classification)
+                            .font(.title3)
+                            .foregroundColor(color)
+                    }
+                }
+
+                //Image
+                if let imageName = medicine.imageName, let uiImage = UIImage(named: imageName) {
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 250)
+                        .cornerRadius(10)
+                        .padding(.bottom, 16)
+
                 }
 
                 // Description section
@@ -132,8 +145,8 @@ struct MedicineDetailView: View {
             }
             .padding()
         }
-        .navigationTitle(medicine.name)
-        .navigationBarTitleDisplayMode(.inline)
+        //.navigationTitle(medicine.name)
+        .navigationBarBackButtonHidden(true) // This hides the second back button
     }
 
     // Helper function for icon and color in detail view
@@ -182,7 +195,7 @@ struct MedicinesListView: View {
                 }
                 .listStyle(PlainListStyle())
             }
-            .navigationBarHidden(true)
+            .navigationBarHidden(false)
         }
     }
 }
