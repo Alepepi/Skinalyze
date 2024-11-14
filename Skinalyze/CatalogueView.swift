@@ -20,16 +20,17 @@ struct SkinIssue: Identifiable {
 
 // Sample data for testing
 let sampleSkinIssues = [
-    SkinIssue(name: "Acne", description: "A common skin condition causing pimples.", symptoms: ["Pimples", "Blackheads", "Whiteheads"], causes: "Blocked pores, excess oil, bacteria.", treatments: "Topical treatments, oral medication.", severity: "Leve"),
-    SkinIssue(name: "Eczema", description: "A condition causing itchy, inflamed skin.", symptoms: ["Dry skin", "Itching", "Red patches"], causes: "Genetics, immune system issues.", treatments: "Moisturizers, steroid creams.", severity: "Moderado"),
-    SkinIssue(name: "Psoriasis", description: "A chronic autoimmune condition causing skin cells to build up rapidly.", symptoms: ["Red patches", "Itching", "Scales"], causes: "Genetic factors, immune system issues.", treatments: "Topical treatments, light therapy.", severity: "Peligroso"),
-    SkinIssue(name: "Melanoma", description: "A type of skin cancer that can spread rapidly.", symptoms: ["New mole", "Change in existing mole", "Itching"], causes: "UV exposure, genetics.", treatments: "Surgery, radiation therapy.", severity: "Mortal"),
-    SkinIssue(name: "Rosacea", description: "A condition causing redness and visible blood vessels in the face.", symptoms: ["Facial redness", "Pimples", "Swelling"], causes: "Genetic factors, environmental triggers.", treatments: "Topical creams, laser therapy.", severity: "Moderado"),
-    SkinIssue(name: "Cold Sores", description: "Blisters that appear around the mouth, caused by the herpes simplex virus.", symptoms: ["Blisters", "Itching", "Burning sensation"], causes: "Herpes simplex virus (HSV-1).", treatments: "Antiviral creams, oral medications.", severity: "Leve"),
-    SkinIssue(name: "Chickenpox", description: "A contagious viral infection that causes an itchy rash with red spots.", symptoms: ["Itchy rash", "Fever", "Fatigue"], causes: "Varicella-zoster virus.", treatments: "Calamine lotion, antihistamines.", severity: "Moderado"),
-    SkinIssue(name: "Shingles", description: "A painful rash caused by the reactivation of the chickenpox virus.", symptoms: ["Painful rash", "Blisters", "Itching"], causes: "Varicella-zoster virus.", treatments: "Antiviral drugs, pain relievers.", severity: "Peligroso"),
-    SkinIssue(name: "Basal Cell Carcinoma", description: "A type of skin cancer that typically grows slowly and rarely spreads.", symptoms: ["Painless lump", "Ulcerated sore", "Bleeding"], causes: "UV exposure, sun damage.", treatments: "Surgical removal, radiation therapy.", severity: "Peligroso"),
-    SkinIssue(name: "Fungal Infection", description: "An infection caused by fungi that affects the skin.", symptoms: ["Red, itchy patches", "Scaly skin", "Blisters"], causes: "Fungal spores", treatments: "Antifungal creams, oral antifungal medications.", severity: "Leve")
+    SkinIssue(name: "Acne", description: "A common skin condition causing pimples.", symptoms: ["Pimples", "Blackheads", "Whiteheads"], causes: "Blocked pores, excess oil, bacteria.", treatments: "Topical treatments, oral medication.", severity: "Mild"),
+    SkinIssue(name: "Severe Dermatitis", description: "A serious inflammation of the skin.", symptoms: ["Severe itching", "Red patches", "Swelling"], causes: "Allergic reactions, infections.", treatments: "Steroid creams, oral medication.", severity: "Severe"),
+    SkinIssue(name: "Eczema", description: "A condition causing itchy, inflamed skin.", symptoms: ["Dry skin", "Itching", "Red patches"], causes: "Genetics, immune system issues.", treatments: "Moisturizers, steroid creams.", severity: "Moderate"),
+    SkinIssue(name: "Psoriasis", description: "A chronic autoimmune condition causing skin cells to build up rapidly.", symptoms: ["Red patches", "Itching", "Scales"], causes: "Genetic factors, immune system issues.", treatments: "Topical treatments, light therapy.", severity: "Hazardous"),
+    SkinIssue(name: "Melanoma", description: "A type of skin cancer that can spread rapidly.", symptoms: ["New mole", "Change in existing mole", "Itching"], causes: "UV exposure, genetics.", treatments: "Surgery, radiation therapy.", severity: "Fatal"),
+    SkinIssue(name: "Rosacea", description: "A condition causing redness and visible blood vessels in the face.", symptoms: ["Facial redness", "Pimples", "Swelling"], causes: "Genetic factors, environmental triggers.", treatments: "Topical creams, laser therapy.", severity: "Moderate"),
+    SkinIssue(name: "Cold Sores", description: "Blisters that appear around the mouth, caused by the herpes simplex virus.", symptoms: ["Blisters", "Itching", "Burning sensation"], causes: "Herpes simplex virus (HSV-1).", treatments: "Antiviral creams, oral medications.", severity: "Mild"),
+    SkinIssue(name: "Chickenpox", description: "A contagious viral infection that causes an itchy rash with red spots.", symptoms: ["Itchy rash", "Fever", "Fatigue"], causes: "Varicella-zoster virus.", treatments: "Calamine lotion, antihistamines.", severity: "Moderate"),
+    SkinIssue(name: "Shingles", description: "A painful rash caused by the reactivation of the chickenpox virus.", symptoms: ["Painful rash", "Blisters", "Itching"], causes: "Varicella-zoster virus.", treatments: "Antiviral drugs, pain relievers.", severity: "Hazardous"),
+    SkinIssue(name: "Basal Cell Carcinoma", description: "A type of skin cancer that typically grows slowly and rarely spreads.", symptoms: ["Painless lump", "Ulcerated sore", "Bleeding"], causes: "UV exposure, sun damage.", treatments: "Surgical removal, radiation therapy.", severity: "Hazardous"),
+    SkinIssue(name: "Fungal Infection", description: "An infection caused by fungi that affects the skin.", symptoms: ["Red, itchy patches", "Scaly skin", "Blisters"], causes: "Fungal spores", treatments: "Antifungal creams, oral antifungal medications.", severity: "Mild")
 ]
 
 // MARK: - Row View for Each Skin Issue
@@ -39,15 +40,15 @@ struct SkinIssueRow: View {
     // Function to get icon and color based on severity level
     private func severityIconAndColor(for severity: String) -> (String, Color) {
         switch severity {
-        case "Leve":
+        case "Mild":
             return ("checkmark.circle", .green)
-        case "Moderado":
+        case "Moderate":
             return ("exclamationmark.circle", .yellow)
-        case "Peligroso":
+        case "Hazardous":
             return ("exclamationmark.triangle", .orange)
-        case "Severo":
+        case "Severe":
             return ("exclamationmark.octagon", .red)
-        case "Mortal":
+        case "Fatal":
             return ("xmark.octagon", .red)
         default:
             return ("questionmark.circle", .gray)
