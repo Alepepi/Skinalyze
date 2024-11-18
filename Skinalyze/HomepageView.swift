@@ -29,8 +29,16 @@ struct HomepageView: View {
                 
                 Text(predictionLabel)
                     .font(.title2)
-                    .foregroundColor(.blue)
+                    .foregroundColor(.white)
                     .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color(hex: "#007A39"), lineWidth: 3)
+                            .fill(Color(hex: "#AAF0C1"))
+                            .frame(width: 300, height: 50)
+                    )
+                    .padding([.leading, .trailing], 20)
+
                 
                 Button(action: {
                     sourceType = .camera
@@ -116,7 +124,7 @@ struct HomepageView: View {
                             RoundedRectangle(cornerRadius: 15)
                                 .stroke(Color(hex: "#E3001E"), lineWidth: 3)
                                 .fill(Color(hex: "#FF8985"))
-                                .frame(width: 300, height: 100)
+                                .frame(width: 300, height: 80)
                             Image(systemName: "pencil.and.scribble")
                                 .font(.system(size: 50))
                                 .foregroundColor(Color(hex: "#E3001E"))
