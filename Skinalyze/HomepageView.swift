@@ -32,25 +32,27 @@ struct HomepageView: View {
                 }) {
                     VStack(alignment: .leading) {
                         Text("Skin Scanner")
-                            .font(.system(size: 20))
+                            .font(.system(size: 22))
                             .foregroundColor(Color.black)
-                            .padding(.top, 10)
+                            .padding(.top, 15)
                             .fontWeight(.bold)
 
                         ZStack {
                             RoundedRectangle(cornerRadius: 15)
-                                .stroke(Color(hex: "#007A39"), lineWidth: 3)
-                                .fill(Color(hex: "#AAF0C1"))
-                                .frame(width: 300, height: 130)
+                                .stroke(Color(hex: "#0D5C8B"), lineWidth: 8)
+                                .fill(Color(hex: "#E2EFFD"))
+                                .frame(width: 340, height: 300)
+                                .shadow(color: Color.black.opacity(0.1), radius: 10, x: 5, y: 5)
+
                             
                             VStack {
                                 Image(systemName: "camera.fill")
                                     .font(.system(size: 50))
-                                    .foregroundColor(Color(hex: "#007A39"))
+                                    .foregroundColor(Color(hex: "#0D5C8B"))
                                 
                                 Text(predictionLabel)
                                     .font(.title2)
-                                    .foregroundColor(Color(hex: "#007A39"))
+                                    .foregroundColor(Color(hex: "#0D5C8B"))
                                     .padding(.top, 8)
                                     .lineLimit(2) // Allow up to 2 lines of text
                                     .multilineTextAlignment(.center) // Center-align the text
@@ -60,50 +62,6 @@ struct HomepageView: View {
                         }
                     }
                 }
-                .padding(.bottom, 3)
-                
-                HStack {
-                    NavigationLink(destination: SkinIssuesListView()) {
-                        VStack(alignment: .leading) {
-                            Text("Catalogue")
-                                .font(.system(size: 20))
-                                .foregroundColor(Color.black)
-                                .padding(.top, 5)
-                                .fontWeight(.bold)
-
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .stroke(Color(hex: "#E6C700"), lineWidth: 4)
-                                    .fill(Color(hex: "#FFF9BA"))
-                                    .frame(width: 140, height: 120)
-                                Image(systemName: "books.vertical.fill")
-                                    .font(.system(size: 40))
-                                    .foregroundColor(Color(hex: "#E6C700"))
-                            }
-                        }
-                    }
-                    Spacer().frame(width: 25)
-                    NavigationLink(destination: MedicinesListView()) {
-                        VStack(alignment: .leading) {
-                            Text("Medicines")
-                                .font(.system(size: 20))
-                                .foregroundColor(Color.black)
-                                .padding(.top, 5)
-                                .fontWeight(.bold)
-
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .stroke(Color(hex: "#E67700"), lineWidth: 4)
-                                    .fill(Color(hex: "#FCC883"))
-                                    .frame(width: 140, height: 120)
-                                Image(systemName: "pills.fill")
-                                    .font(.system(size: 45))
-                                    .foregroundColor(Color(hex: "#E67700"))
-                            }
-                        }
-                    }
-                }
-                
                 Spacer()
                     .frame(height: 10)
                 
@@ -113,19 +71,21 @@ struct HomepageView: View {
                 }) {
                     VStack(alignment: .leading) {
                         Text("Care Tips")
-                            .font(.system(size: 20))
+                            .font(.system(size: 22))
                             .foregroundColor(Color.black)
-                            .padding(.top, 5)
+                            .padding(.top, 13)
                             .fontWeight(.bold)
                         
                         ZStack {
                             RoundedRectangle(cornerRadius: 15)
-                                .stroke(Color(hex: "#E3001E"), lineWidth: 3)
-                                .fill(Color(hex: "#FF8985"))
-                                .frame(width: 300, height: 100)
+                                .stroke(Color(hex: "#E2EFFD"), lineWidth: 5)
+                                .fill(Color(hex: "#0D5C8B"))
+                                .frame(width: 340, height: 100)
+                                .shadow(color: Color.black.opacity(0.1), radius: 10, x: 5, y: 5)
+
                             Image(systemName: "pencil.and.scribble")
                                 .font(.system(size: 50))
-                                .foregroundColor(Color(hex: "#E3001E"))
+                                .foregroundColor(Color.white)
                         }
                     }
                 }

@@ -37,19 +37,19 @@ struct ContentView: View {
             TabView {
                 HomepageView()
                     .tabItem {
-                        Image(systemName: "house.fill")
-                        Text("Home")
+                        Image(systemName: "magnifyingglass")
+                        Text("Scanner")
                     }
                 
                 RecordsView()
                     .tabItem {
-                        Image(systemName: "book")
-                        Text("Records")
+                        Image(systemName: "books.vertical.fill")
+                        Text("Catalogue")
                     }
                 ProfileView()
                     .tabItem {
-                        Image(systemName: "person.fill")
-                        Text("Profile")
+                        Image(systemName: "pills.fill")
+                        Text("Medicines")
                     }
             }
         }
