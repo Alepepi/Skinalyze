@@ -26,20 +26,6 @@ struct HomepageView: View {
                     .foregroundColor(.gray)
                     .multilineTextAlignment(.center)
                     .padding([.leading, .trailing], 15)
-                
-                Text(predictionLabel)
-                    .font(.title2)
-                    .foregroundColor(.white)
-                    .padding()
-                    .background(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color(hex: "#007A39"), lineWidth: 3)
-                            .fill(Color(hex: "#AAF0C1"))
-                            .frame(width: 300, height: 50)
-                    )
-                    .padding([.leading, .trailing], 20)
-
-                
                 Button(action: {
                     sourceType = .camera
                     isImagePickerPresented = true
@@ -50,15 +36,27 @@ struct HomepageView: View {
                             .foregroundColor(Color.black)
                             .padding(.top, 10)
                             .fontWeight(.bold)
-                        
+
                         ZStack {
                             RoundedRectangle(cornerRadius: 15)
                                 .stroke(Color(hex: "#007A39"), lineWidth: 3)
                                 .fill(Color(hex: "#AAF0C1"))
                                 .frame(width: 300, height: 130)
-                            Image(systemName: "camera.fill")
-                                .font(.system(size: 50))
-                                .foregroundColor(Color(hex: "#007A39"))
+                            
+                            VStack {
+                                Image(systemName: "camera.fill")
+                                    .font(.system(size: 50))
+                                    .foregroundColor(Color(hex: "#007A39"))
+                                
+                                Text(predictionLabel)
+                                    .font(.title2)
+                                    .foregroundColor(Color(hex: "#007A39"))
+                                    .padding(.top, 8)
+                                    .lineLimit(2) // Allow up to 2 lines of text
+                                    .multilineTextAlignment(.center) // Center-align the text
+                                    .frame(maxWidth: 280) // Keep the text width within the rectangle's width
+                                    .minimumScaleFactor(0.5) // Scale down the font size if the text overflows
+                            }
                         }
                     }
                 }
@@ -124,7 +122,7 @@ struct HomepageView: View {
                             RoundedRectangle(cornerRadius: 15)
                                 .stroke(Color(hex: "#E3001E"), lineWidth: 3)
                                 .fill(Color(hex: "#FF8985"))
-                                .frame(width: 300, height: 80)
+                                .frame(width: 300, height: 100)
                             Image(systemName: "pencil.and.scribble")
                                 .font(.system(size: 50))
                                 .foregroundColor(Color(hex: "#E3001E"))
@@ -241,4 +239,3 @@ struct HomepageView_Previews: PreviewProvider {
         HomepageView()
     }
 }
-
