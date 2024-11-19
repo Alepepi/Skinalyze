@@ -25,15 +25,23 @@ extension Color {
 
 struct ContentView: View {
     init() {
-            let appearance = UITabBarAppearance()
-            UITabBar.appearance().scrollEdgeAppearance = appearance
+        // Configuración global de la apariencia del Tab Bar
+        let appearance = UITabBarAppearance()
         
-            appearance.stackedLayoutAppearance.selected.iconColor = UIColor(Color(hex: "#0D5C8B"))
-            appearance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor(Color(hex: "#0D5C8B"))]
+        // Cambiar color para la selección de iconos y títulos
+        appearance.stackedLayoutAppearance.selected.iconColor = UIColor(Color(hex: "#0D5C8B"))
+        appearance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor(Color(hex: "#0D5C8B"))]
+        
+        // Cambiar color para los iconos y títulos no seleccionados
+        appearance.stackedLayoutAppearance.normal.iconColor = UIColor.gray
+        appearance.stackedLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.gray]
+
+        // Aplicar el estilo de la apariencia
+        UITabBar.appearance().standardAppearance = appearance
+        UITabBar.appearance().scrollEdgeAppearance = appearance
     }
         
     var body: some View {
-        NavigationView {
             TabView {
                 HomepageView()
                     .tabItem {
@@ -41,12 +49,13 @@ struct ContentView: View {
                         Text("Scanner")
                     }
                 
-                RecordsView()
+                SkinIssuesListView()
                     .tabItem {
                         Image(systemName: "books.vertical.fill")
                         Text("Catalogue")
                     }
-                ProfileView()
+                
+                MedicinesListView()
                     .tabItem {
                         Image(systemName: "pills.fill")
                         Text("Medicines")
@@ -54,25 +63,6 @@ struct ContentView: View {
             }
         }
     }
-}
-
-struct RecordsView: View {
-    var body: some View {
-        Text("Records")
-            .font(.largeTitle)
-            .fontWeight(.bold)
-            .padding()
-    }
-}
-    
-struct ProfileView: View {
-    var body: some View {
-        Text("Profile")
-            .font(.largeTitle)
-            .fontWeight(.bold)
-            .padding()
-    }
-}
 
 #Preview {
     ContentView()

@@ -22,10 +22,12 @@ struct HomepageView: View {
         NavigationView {
             VStack {
                 Text("Analyze and identify skin issues, discover recommended treatments and practical care tips for managing skin health.")
-                    .font(.system(size: 20))
+                    .font(.system(size: 23))
                     .foregroundColor(.gray)
                     .multilineTextAlignment(.center)
                     .padding([.leading, .trailing], 15)
+                    .padding(.top, 20)
+                
                 Button(action: {
                     sourceType = .camera
                     isImagePickerPresented = true
@@ -34,15 +36,15 @@ struct HomepageView: View {
                         Text("Skin Scanner")
                             .font(.system(size: 22))
                             .foregroundColor(Color.black)
-                            .padding(.top, 15)
+                            .padding(.top, 5)
                             .fontWeight(.bold)
 
                         ZStack {
                             RoundedRectangle(cornerRadius: 15)
                                 .stroke(Color(hex: "#0D5C8B"), lineWidth: 8)
                                 .fill(Color(hex: "#E2EFFD"))
-                                .frame(width: 340, height: 300)
-                                .shadow(color: Color.black.opacity(0.1), radius: 10, x: 5, y: 5)
+                                .frame(width: 340, height: 270)
+                                .shadow(color: Color.black.opacity(0.3), radius: 10, x: 5, y: 5)
 
                             
                             VStack {
@@ -51,9 +53,9 @@ struct HomepageView: View {
                                     .foregroundColor(Color(hex: "#0D5C8B"))
                                 
                                 Text(predictionLabel)
-                                    .font(.title2)
+                                    .font(.system(size: 28))
                                     .foregroundColor(Color(hex: "#0D5C8B"))
-                                    .padding(.top, 8)
+                                    .padding(.top, 7)
                                     .lineLimit(2) // Allow up to 2 lines of text
                                     .multilineTextAlignment(.center) // Center-align the text
                                     .frame(maxWidth: 280) // Keep the text width within the rectangle's width
@@ -63,7 +65,7 @@ struct HomepageView: View {
                     }
                 }
                 Spacer()
-                    .frame(height: 10)
+                    .frame(height: 7)
                 
                 Button(action: {
                     sourceType = .camera
@@ -73,15 +75,15 @@ struct HomepageView: View {
                         Text("Care Tips")
                             .font(.system(size: 22))
                             .foregroundColor(Color.black)
-                            .padding(.top, 13)
+                            .padding(.top, 7)
                             .fontWeight(.bold)
                         
                         ZStack {
                             RoundedRectangle(cornerRadius: 15)
-                                .stroke(Color(hex: "#E2EFFD"), lineWidth: 5)
+                                //.stroke(Color(hex: "#E2EFFD"), lineWidth: 4)
                                 .fill(Color(hex: "#0D5C8B"))
                                 .frame(width: 340, height: 100)
-                                .shadow(color: Color.black.opacity(0.1), radius: 10, x: 5, y: 5)
+                                .shadow(color: Color.black.opacity(0.3), radius: 10, x: 5, y: 5)
 
                             Image(systemName: "pencil.and.scribble")
                                 .font(.system(size: 50))

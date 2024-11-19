@@ -86,13 +86,19 @@ struct MedicineRow_Previews: PreviewProvider {
 // MARK: - Detail View for Each Medicine
 struct MedicineDetailView: View {
     let medicine: MedicinesView
-
+    
+    // State variables for toggling visibility
+    @State private var showUses = false
+    @State private var showSideEffects = false
+    @State private var showDosage = false
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
+                // Title and classification
                 HStack {
                     Text(medicine.name)
-                        .font(.largeTitle)
+                        .font(.title)
                         .bold()
                     
                     // Classification icon and description
@@ -105,50 +111,61 @@ struct MedicineDetailView: View {
                             .foregroundColor(color)
                     }
                 }
-
-                //Image
+                
+                // Image section (with fixed size)
                 if let imageName = medicine.imageName, let uiImage = UIImage(named: imageName) {
                     Image(uiImage: uiImage)
                         .resizable()
-                        .scaledToFit()
-                        .frame(height: 250)
-                        .cornerRadius(10)
+                        .scaledToFill()
+                        .frame(width: UIScreen.main.bounds.width * 0.9, height: 300) // Fixed size for all images
+                        .cornerRadius(15)
                         .padding(.bottom, 16)
-
+                        .frame(maxWidth: .infinity) // Center the image horizontally
+                        .clipped() // Ensure the image does not overflow
                 }
-
-                // Description section
-                Text("Description")
-                    .font(.title2)
-                    .bold()
-                Text(medicine.description)
-
-                // Uses section
-                Text("Uses")
-                    .font(.title2)
-                    .bold()
-                ForEach(medicine.uses, id: \.self) { use in
-                    Text("• \(use)")
+                
+                // Description section (no border)
+                sectionWrapper(backgroundColor: Color.gray.opacity(0.3), hasBorder: false) {
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("Description")
+                            .font(.title2)
+                            .bold()
+                            .foregroundColor(Color(hex: "#0D5C8B"))
+                        Text(medicine.description)
+                            .multilineTextAlignment(.leading)
+                    }
+                    .padding(.horizontal)
                 }
-
-                // Side Effects section
-                Text("Side Effects")
-                    .font(.title2)
-                    .bold()
-                Text(medicine.sideEffects)
-
-                // Dosage section
-                Text("Dosage")
-                    .font(.title2)
-                    .bold()
-                Text(medicine.dosage)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                
+                // Uses section (with border)
+                sectionWrapper(backgroundColor: Color(hex: "0D5C8B"), hasBorder: true, borderColor: Color(hex: "#0D5C8B")) {
+                    sectionToggle(title: "Uses", isExpanded: $showUses) {
+                        ForEach(medicine.uses, id: \.self) { use in
+                            Text("• \(use)")
+                        }
+                    }
+                }
+                
+                // Side Effects section (with border)
+                sectionWrapper(backgroundColor: Color(hex: "#0D5C8B"), hasBorder: true, borderColor: Color(hex: "#0D5C8B")) {
+                    sectionToggle(title: "Side Effects", isExpanded: $showSideEffects) {
+                        Text(medicine.sideEffects)
+                    }
+                }
+                
+                // Dosage section (with border)
+                sectionWrapper(backgroundColor: Color(hex: "#0D5C8B"), hasBorder: true, borderColor: Color(hex: "#0D5C8B")) {
+                    sectionToggle(title: "Dosage", isExpanded: $showDosage) {
+                        Text(medicine.dosage)
+                    }
+                }
             }
             .padding()
         }
-        //.navigationTitle(medicine.name)
-        .navigationBarBackButtonHidden(true) // This hides the second back button
+        .navigationBarBackButtonHidden(false)
     }
-
+    
     // Helper function for icon and color in detail view
     private func classificationIconAndColor(for classification: String) -> (String, Color) {
         switch classification {
@@ -164,38 +181,153 @@ struct MedicineDetailView: View {
             return ("questionmark.circle", .gray)
         }
     }
+    
+    // Reusable view for toggleable sections (similar to issues)
+    @ViewBuilder
+    private func sectionToggle<Content: View>(
+        title: String,
+        isExpanded: Binding<Bool>,
+        @ViewBuilder content: @escaping () -> Content
+    ) -> some View {
+        VStack(alignment: .leading) {
+            Button(action: {
+                withAnimation {
+                    isExpanded.wrappedValue.toggle()
+                }
+            }) {
+                HStack {
+                    Text(title)
+                        .font(.title2)
+                        .bold()
+                        .foregroundColor(
+                            title == "Uses" ? Color(hex:"#E2EFFD") :
+                            title == "Side Effects" ? Color(hex:"#0D5C8B") :
+                            title == "Dosage" ? Color(hex:"#E2EFFD"): .primary)
+                    Spacer()
+                    Image(systemName: isExpanded.wrappedValue ? "chevron.down" : "chevron.right")
+                        .foregroundColor(.secondary)
+                }
+            }
+            
+            if isExpanded.wrappedValue {
+                content()
+                    .transition(.opacity) // Optional transition for smoothness
+            }
+        }
+        .padding(.top, 8)
+    }
+    
+    // Wrapper view for sections with background color, rounded corners, and optional border
+    @ViewBuilder
+    private func sectionWrapper<Content: View>(
+        backgroundColor: Color,
+        hasBorder: Bool = true,
+        borderColor: Color = .clear,
+        @ViewBuilder content: @escaping () -> Content
+    ) -> some View {
+        content()
+            .padding()
+            .background(RoundedRectangle(cornerRadius: 12).fill(backgroundColor))
+            .overlay(
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(borderColor, lineWidth: hasBorder ? 2 : 0) // Optional border
+            )
+            .frame(maxWidth: .infinity) // Ensure all sections have the same width
+            .padding(.bottom, 8) // Add spacing between sections
+    }
 }
 
 // Preview for MedicineDetailView
 struct MedicineDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            MedicineDetailView(medicine: sampleMedicines[0])
-        }
+        MedicineDetailView(medicine: sampleMedicines[0])
     }
 }
+
 
 // MARK: - Main List View for Medicines
 struct MedicinesListView: View {
     var medicines = sampleMedicines
-
+    @State private var searchText = "" // Estado para el texto de búsqueda
+    @State private var selectedClasification: String = "All" // Estado para la categoría seleccionada
+    @State private var showingClasificationMenu = false // Estado para mostrar el menú de categorías
+    
+    // Lista de categorías disponibles
+    let clasification = ["All", "OTC", "Prescription", "Controlled", "Restricted"]
+    
     var body: some View {
         NavigationView {
             VStack(spacing: 20) {
+                Spacer()
+                    .frame(height: 3)
+                
+                HStack {
+                    TextField("Search medicines...", text: $searchText)
+                        .padding(9)
+                        .background(Color(.systemGray6))
+                        .cornerRadius(10)
+                        .padding(.horizontal)
+                        .frame(height: 3)
+                    
+                    Spacer()
+                        .frame(width: 20)
+                    
+                    Button(action: {
+                        showingClasificationMenu.toggle()
+                    }) {
+                        Image(systemName: "line.horizontal.3.decrease.circle.fill")
+                            .font(.title)
+                            .padding(.trailing)
+                    }
+                }
+                .padding(.horizontal)
+                
                 Text("Medicines")
                     .font(.largeTitle)
                     .bold()
                     .multilineTextAlignment(.center)
-                    .padding(.top, 12)
-
-                List(medicines) { medicine in
+                    .padding(.top, 20)
+                
+                // Lista de medicinas filtrada por búsqueda y categoría
+                List(filteredMedicines) { medicine in
                     NavigationLink(destination: MedicineDetailView(medicine: medicine)) {
                         MedicineRow(medicine: medicine)
                     }
                 }
                 .listStyle(PlainListStyle())
             }
-            .navigationBarHidden(false)
+        }
+        .actionSheet(isPresented: $showingClasificationMenu) {
+            ActionSheet(title: Text("Filter by Clasification"), message: nil, buttons: [
+                .default(Text("All")) {
+                    selectedClasification = "All"
+                },
+                .default(Text("OTC")) {
+                    selectedClasification = "OTC"
+                },
+                .default(Text("Prescription")) {
+                    selectedClasification = "Prescription"
+                },
+                .default(Text("Controlled")) {
+                    selectedClasification = "Controlled"
+                },
+                .default(Text("Restricted")) {
+                    selectedClasification = "Restricted"
+                },
+                .cancel()
+            ])
+        }
+    }
+    // Propiedad computada para filtrar las medicinas según el texto de búsqueda y la categoría seleccionada
+    private var filteredMedicines: [MedicinesView] {
+        medicines.filter { medicine in
+            let matchesSearchTextMed = searchText.isEmpty ||
+            medicine.name.lowercased().contains(searchText.lowercased()) ||
+            medicine.description.lowercased().contains(searchText.lowercased())
+            
+            let matchesCategoryMed = selectedClasification == "All" || medicine.classification == selectedClasification
+            
+            return matchesSearchTextMed && matchesCategoryMed
         }
     }
 }
