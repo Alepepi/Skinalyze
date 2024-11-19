@@ -67,10 +67,7 @@ struct HomepageView: View {
                 Spacer()
                     .frame(height: 7)
                 
-                Button(action: {
-                    sourceType = .camera
-                    isImagePickerPresented = true
-                }) {
+                NavigationLink(destination: TipsListView()) {
                     VStack(alignment: .leading) {
                         Text("Care Tips")
                             .font(.system(size: 22))

@@ -148,7 +148,7 @@ struct MedicineDetailView: View {
                 }
                 
                 // Side Effects section (with border)
-                sectionWrapper(backgroundColor: Color(hex: "#0D5C8B"), hasBorder: true, borderColor: Color(hex: "#0D5C8B")) {
+                sectionWrapper(backgroundColor: Color(hex: "#E2EFFD"), hasBorder: true, borderColor: Color(hex: "#0D5C8B")) {
                     sectionToggle(title: "Side Effects", isExpanded: $showSideEffects) {
                         Text(medicine.sideEffects)
                     }
@@ -250,7 +250,6 @@ struct MedicinesListView: View {
     var medicines = sampleMedicines
     @State private var searchText = "" // Estado para el texto de búsqueda
     @State private var selectedClasification: String = "All" // Estado para la categoría seleccionada
-    @State private var showingClasificationMenu = false // Estado para mostrar el menú de categorías
     
     // Lista de categorías disponibles
     let clasification = ["All", "OTC", "Prescription", "Controlled", "Restricted"]
@@ -272,9 +271,16 @@ struct MedicinesListView: View {
                     Spacer()
                         .frame(width: 20)
                     
-                    Button(action: {
-                        showingClasificationMenu.toggle()
-                    }) {
+                    // Menú de selección de categoría
+                    Menu {
+                        ForEach(clasification, id: \.self) { category in
+                            Button(action: {
+                                selectedClasification = category
+                            }) {
+                                Text(category)
+                            }
+                        }
+                    } label: {
                         Image(systemName: "line.horizontal.3.decrease.circle.fill")
                             .font(.title)
                             .padding(.trailing)
@@ -297,28 +303,9 @@ struct MedicinesListView: View {
                 .listStyle(PlainListStyle())
             }
         }
-        .actionSheet(isPresented: $showingClasificationMenu) {
-            ActionSheet(title: Text("Filter by Clasification"), message: nil, buttons: [
-                .default(Text("All")) {
-                    selectedClasification = "All"
-                },
-                .default(Text("OTC")) {
-                    selectedClasification = "OTC"
-                },
-                .default(Text("Prescription")) {
-                    selectedClasification = "Prescription"
-                },
-                .default(Text("Controlled")) {
-                    selectedClasification = "Controlled"
-                },
-                .default(Text("Restricted")) {
-                    selectedClasification = "Restricted"
-                },
-                .cancel()
-            ])
-        }
     }
-    // Propiedad computada para filtrar las medicinas según el texto de búsqueda y la categoría seleccionada
+    
+    
     private var filteredMedicines: [MedicinesView] {
         medicines.filter { medicine in
             let matchesSearchTextMed = searchText.isEmpty ||
